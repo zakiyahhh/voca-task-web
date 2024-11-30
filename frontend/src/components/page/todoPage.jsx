@@ -3,8 +3,7 @@ import { doneTask, getTask, deleteTask } from '../../api/task';
 import TodoPageTemplate from '../template/todoPageTemplate';
 
 const TodoPage = () => {
-
-    const [user] = useState({ name: 'Sarah' });
+    const [refresh, setRefresh] = useState(false)
     const [tasks, setTasks] = useState([]);
 
     const fetchData = async () => {
@@ -14,25 +13,25 @@ const TodoPage = () => {
 
     const handleCompleteTask = async (id) => {
         await doneTask(id)
+        setRefresh(!refresh)
     };
 
-    const handleDeleteTask = async (id) => await deleteTask(id);
-
-    const handleEditProfile = () => alert('Edit Profile');
-    const handleSignOut = () => alert('Signed Out');
+    const handleDeleteTask = async (id) => {
+        await deleteTask(id)
+        setRefresh(!refresh)
+    };
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [refresh])
 
     return (
         <TodoPageTemplate
-            user={user}
             tasks={tasks}
             onCompleteTask={handleCompleteTask}
             onDeleteTask={handleDeleteTask}
-            onEditProfile={handleEditProfile}
-            onSignOut={handleSignOut}
+            setRefresh={setRefresh}
+            refresh={refresh}
         />
     );
 };

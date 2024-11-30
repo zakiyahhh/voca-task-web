@@ -3,13 +3,15 @@ import Button from '../atoms/Button';
 import { createTask } from '../../api/task';
 import { useState } from 'react';
 
-const AddTaskBar = () => {
+const AddTaskBar = ({ setRefresh, refresh }) => {
     const [task, setTask] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             await createTask(task)
+            setRefresh(!refresh)
+            setTask('')
         }
         catch (error) {
             console.error(error)

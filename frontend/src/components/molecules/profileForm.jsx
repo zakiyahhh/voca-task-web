@@ -1,5 +1,5 @@
 import Input from '../atoms/input';
-import Button from '../atoms/button';
+import Button from '../atoms/Button';
 
 const ProfileForm = ({
     profileUrl,
